@@ -2,13 +2,15 @@
 
 require 'FileUtils'
 
-templateName = ARGV[0]
+templatePath = ARGV[0]
+templateName = File.basename templatePath
+
 home = Dir.home
-output = File.join(home, "/Library/Developer/Xcode/Templates/File\ Templates/Custom/"+ templateName +".xctemplate")
+output = File.join(home, "/Library/Developer/Xcode/Templates/File\ Templates/Custom/"+ templateName)
 FileUtils::mkdir_p output
-FileUtils.copy_entry "./"+ templateName +".xctemplate", output
+FileUtils.copy_entry templatePath, output
 
 
-output = File.join(home, "/Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/File\ Templates/Custom/"+ templateName +".xctemplate")
+output = File.join(home, "/Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/File\ Templates/Custom/"+ templateName)
 FileUtils::mkdir_p output
-FileUtils.copy_entry "./"+ templateName +".xctemplate", output
+FileUtils.copy_entry templatePath, output
