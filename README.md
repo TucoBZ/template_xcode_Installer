@@ -1,4 +1,4 @@
-# template_xcode_Installer
+# Template XCode Installer
 A ruby script to install xctemplate on XCode IDE
 
 Usage:
