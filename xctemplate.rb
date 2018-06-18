@@ -2,15 +2,37 @@
 
 require 'FileUtils'
 
+# Template Path from Argument
 templatePath = ARGV[0]
+# Template Name
 templateName = File.basename templatePath
 
+applicationsPath = "/Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/File\ Templates/Custom/"
+libraryPath = "/Library/Developer/Xcode/Templates/File\ Templates/Custom/"
+
+class FolderUtil
+    # This create a new folder in the path, by deleting anithing there to override it
+    def createAndCopyToFolder(fromPath, toPath)
+        cleanFolderAt(toPath)
+        FileUtils::mkdir_p toPath
+        FileUtils.copy_entry fromPath, toPath
+    end
+
+    # Safe folder remove
+    def cleanFolderAt(path)
+        FileUtils.remove_dir(path)
+    end
+end
+
+util = FolderUtil.new
+
+# User Home
 home = Dir.home
-output = File.join(home, "/Library/Developer/Xcode/Templates/File\ Templates/Custom/"+ templateName)
-FileUtils::mkdir_p output
-FileUtils.copy_entry templatePath, output
 
+# First Location to save the template
+outputPath = File.join(home, applicationsPath + templateName)
+util.createAndCopyToFolder(templatePath, outputPath)
 
-output = File.join(home, "/Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/File\ Templates/Custom/"+ templateName)
-FileUtils::mkdir_p output
-FileUtils.copy_entry templatePath, output
+# Second Location to save the template
+outputPath = File.join(home, libraryPath + templateName)
+util.createAndCopyToFolder(templatePath, outputPath)
