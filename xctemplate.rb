@@ -20,7 +20,9 @@ class FolderUtil
 
     # Safe folder remove
     def cleanFolderAt(path)
-        FileUtils.remove_dir(path)
+        if File.directory?(path)
+            FileUtils.remove_dir(path)
+        end
     end
 end
 
